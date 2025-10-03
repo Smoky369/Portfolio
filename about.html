@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About MANISH</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&family=Audiowide&family=Russo+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body
+   {
+      margin: 0;
+      background: black;
+      font-family: 'Rajdhani', sans-serif;
+      color: #00ffcc;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+      padding: 2rem;
+      max-width: 950px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .card {
+      border: 2px solid #00ff99;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 0 25px rgba(0, 255, 153, 0.4);
+      position: relative;
+      overflow: hidden;
+      /* --- Animation Style --- */
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    /* --- Style for when card is visible --- */
+    .card.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+
+    /* --- Original Slideshow --- */
+    .card#about, .card#projects, .card#skills, .card#experience, .card#connect {
+        background: none; /* Remove static background */
+        animation: aboutSlideshow 48s linear infinite;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    @keyframes aboutSlideshow {
+        0%, 100% { background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/btt.jpeg'); }
+        25% { background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/bgg.jpg'); }
+        50% { background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/bggg.avif'); }
+        75% { background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/bg.webp'); }
+    }
+
+
+    .card h1 {
+      margin-top: 0;
+      font-family: 'Orbitron', monospace;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .falling-title span {
+        display: inline-block;
+        opacity: 0;
+        animation: fallIn 0.5s forwards;
+    }
+
+    @keyframes fallIn {
+        from {
+            transform: translateY(-50px) rotate(-10deg);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+        }
+    }
+
+
+    .card h2 {
+      color: #FF00FF;
+      font-family: 'Orbitron', monospace;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .card h3 {
+       color: #FF00FF;
+       font-family: 'Orbitron', monospace;
+    }
+    .heading-logo {
+        width: 28px;
+        height: 28px;
+        stroke: currentColor;
+        stroke-width: 1.5;
+        flex-shrink: 0;
+        fill: none;
+    }
+    .highlight {
+      color: #FF3C3C;
+      font-weight: bold;
+    }
+    .subtext {
+      color: white;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    ul li {
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+    #content {
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+    .cursor {
+      color: #FF3C3C;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      50.01%,100% { opacity: 0; }
+    }
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 10px 10px 0 0;
+      padding: 10px 20px;
+      border: 2px solid #00ff99;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #00ff99;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+    .social-btn:hover {
+      background: #00ff99;
+      color: #000;
+    }
+    .social-btn img.white-filter {
+        filter: brightness(0) invert(1);
+    }
+    p, li, span, h4, h5, h6 {
+        color: #ffffff;
+        text-shadow: none;
+        font-family: 'Rajdhani', sans-serif;
+        letter-spacing: 0.5px;
+    }
+    
+    /* --- About Me Section Image --- */
+    .about-image-container {
+        float: right;
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    .about-image {
+        width: 180px;
+        height: 180px;
+        border-radius: 10px;
+        opacity: 0.5;
+        mix-blend-mode: screen;
+        transition: opacity 0.3s ease;
+    }
+    .about-image:hover {
+        opacity: 0.8;
+    }
+
+    /* --- Experience Section Styles --- */
+    .experience-content {
+        display: flex;
+        gap: 1.5rem;
+        align-items: flex-start;
+    }
+    .experience-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 10px;
+        border: 2px solid #00ff99;
+        object-fit: cover;
+        flex-shrink: 0;
+    }
+    .experience-details {
+        flex: 1;
+    }
+    .experience-links {
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    .icon-link svg {
+        transition: transform 0.3s ease;
+        fill: #FF00FF;
+    }
+    .icon-link:hover svg {
+        transform: scale(1.15);
+        fill: #00f5e1;
+    }
+    .website-link {
+        color: #00f5e1;
+        text-decoration: none;
+        border-bottom: 1px dotted #00f5e1;
+        transition: color 0.3s ease;
+    }
+    .website-link:hover {
+        color: #FF00FF;
+    }
+
+    /* --- TryHackMe Badge Styles --- */
+    .tryhackme-badge-container {
+        text-align: left; 
+        margin-top: 2.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(0, 191, 255, 0.2);
+    }
+    .tryhackme-badge-container h3 {
+        margin-bottom: 1rem;
+        color: #FF3C3C;
+    }
+    .badge-link-wrapper {
+        display: inline-block;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .badge-link-wrapper:hover iframe {
+        box-shadow: 0 0 30px rgba(0, 191, 255, 0.9);
+    }
+     .badge-link-wrapper:hover {
+        transform: translateY(-5px);
+    }
+    .badge-link-wrapper iframe {
+        display: block;
+        width: 100%;
+        max-width: 400px;
+        height: 125px;
+        border-radius: 10px;
+        border: none; 
+        box-shadow: 0 0 15px rgba(0, 191, 255, 0.5);
+        transition: all 0.3s ease;
+    }
+    .tryhackme-badge-container p {
+        font-size: 0.9em;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 1rem;
+    }
+    
+    /* --- Page Navigation Styles --- */
+    .page-nav {
+        z-index: 1001;
+        display: flex;
+        flex-direction: row; /* Changed from column to row */
+        flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
+        justify-content: center; /* Centers the buttons */
+        gap: 15px; /* Space between buttons */
+        padding: 20px 10px; /* Padding around the nav bar */
+        width: 100%;
+        box-sizing: border-box;
+        position: relative; /* Changed from fixed */
+        background-color: rgba(0, 10, 5, 0.5); /* Optional: adds a subtle background */
+        backdrop-filter: blur(5px);
+    }
+    .nav-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 15px;
+        font-family: 'Orbitron', monospace;
+        font-size: 0.9em;
+        color: #00ff99;
+        text-decoration: none;
+        background-color: rgba(0, 25, 15, 0.7);
+        border: 1px solid #00ff99;
+        border-radius: 5px;
+        backdrop-filter: blur(8px);
+        transition: all 0.4s ease;
+        position: relative;
+        z-index: 1;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 10% 100%, 0 75%);
+    }
+    .nav-box:hover {
+        color: #000;
+        background-color: #00ff99;
+        transform: translateY(-5px); /* Changed hover effect */
+        box-shadow: 0 0 25px rgba(0, 255, 153, 0.7);
+        clip-path: polygon(0 0, 100% 0, 100% 80%, 0% 100%, 0 0);
+    }
+    .nav-box svg {
+        width: 18px;
+        height: 18px;
+        stroke: #00ff99;
+        transition: all 0.4s ease;
+    }
+    .nav-box:hover svg {
+        stroke: #000;
+        transform: rotate(10deg) scale(1.1);
+    }
+
+    /* --- Skill Section Styles --- */
+    .skill-section-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+    .skill-image-container {
+        text-align: center;
+        flex-shrink: 0;
+        order: 2;
+    }
+    .skill-image {
+        width: 250px;
+        height: auto;
+        border-radius: 15px;
+        opacity: 0.3;
+        mix-blend-mode: screen;
+        transition: opacity 0.3s ease;
+    }
+    .skill-image:hover {
+        opacity: 0.6;
+    }
+    .card#skills ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        flex-grow: 1;
+        max-width: 50%;
+        order: 1;
+    }
+    .card#skills ul li {
+        margin-bottom: 0.5rem;
+        color: white;
+        padding-left: 20px;
+        position: relative;
+    }
+    .card#skills ul li::before {
+        content: '•';
+        color: #00ff99;
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+    }
+
+    /* --- Project Section Styles --- */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .project-card {
+      background: rgba(10, 25, 20, 0.5);
+      border: 1px solid #00ff99;
+      border-radius: 10px;
+      transition: all 0.4s ease-in-out;
+      box-shadow: 0 0 10px rgba(0, 255, 153, 0.2);
+      overflow: hidden;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 0 30px rgba(0, 255, 153, 0.7);
+      border-color: #00f5e1;
+    }
+    .project-image {
+        height: 180px;
+        overflow: hidden;
+    }
+    .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: all 0.4s ease;
+        filter: grayscale(40%) brightness(0.8);
+    }
+    .project-card:hover .project-image img {
+        transform: scale(1.1);
+        filter: grayscale(0%) brightness(1);
+    }
+    .project-content {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+    .project-card h3 {
+      font-family: 'Russo One', sans-serif;
+      font-size: 1.7rem; 
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(45deg, #00f5e1, #8a2be2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+    .project-card p {
+      font-size: 1em;
+      line-height: 1.5;
+      flex-grow: 1;
+      margin-bottom: 1rem;
+      color: #00ff99;
+    }
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: auto;
+      padding: 10px 18px;
+      background-image: linear-gradient(45deg, #ff00ff, #8a2be2);
+      border: none;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: 600;
+      font-family: 'Orbitron', monospace;
+      transition: all 0.3s ease;
+      align-self: flex-start;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .project-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.5s ease;
+      z-index: -1;
+    }
+    .project-link:hover::before {
+      left: 100%;
+    }
+    .project-link:hover {
+      box-shadow: 0 0 20px #ff00ff, 0 0 30px #8a2be2;
+      transform: scale(1.05);
+    }
+    .project-link svg {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.3s ease;
+    }
+    .project-link:hover svg {
+        transform: translateX(4px);
+    }
+    
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .about-image-container {
+            float: none;
+            display: block;
+            margin: 0 auto 1.5rem auto;
+            text-align: center;
+        }
+        .skill-image {
+            width: 80%;
+        }
+        .skill-section-content {
+            flex-direction: column;
+        }
+        .card#skills ul {
+            width: 100%;
+            text-align: center;
+            max-width: 100%;
+        }
+        .card#skills ul li {
+            text-align: left;
+            margin: 0 auto 0.5rem auto;
+            max-width: fit-content;
+        }
+        .skill-image-container {
+            order: 1;
+        }
+        .card#skills ul {
+            order: 2;
+        }
+    }
+    @media (max-width: 600px) {
+        .experience-content {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .experience-links {
+            justify-content: center;
+        }
+        .tryhackme-badge-container {
+            text-align: center;
+        }
+    }
+  </style>
+</head>
+<body class="matrix">
+  <canvas id="matrixCanvas"></canvas>
+  
+  <nav class="page-nav">
+    <a href="#about" class="nav-box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      About
+    </a>
+    <a href="#projects" class="nav-box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+      Projects
+    </a>
+    </a>
+    <a href="#experience" class="nav-box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      Experience
+    </a>
+    <a href="#skills" class="nav-box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+      Skills
+    </a>
+    <a href="#connect" class="nav-box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+      Connect
+    </a>
+  </nav>
+
+  <div class="container">
+    <div class="card" id="about">
+      <div class="about-image-container">
+  <img 
+    src="images/20250723_095001.jpg" 
+    alt="Profile Image" 
+    style="
+      width: 200px; 
+      height: 200px; 
+      object-fit: cover; 
+      border-radius: 50%; 
+      display: block; 
+      margin: 0 auto; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    "
+  >
+</div>
+
+
+      <h1 class="falling-title" style="
+          font-family: 'Press Start 2P', monospace;
+          font-size: 2.5em;
+          color: #00ffff;
+          font-weight: normal;
+          text-shadow: none;
+          background: none;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        ">
+        <svg class="heading-logo" style="width: 40px; height: 40px; stroke: #00ffff;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <span id="animated-title-main"></span>
+      </h1>
+      <div id="content" style="font-family: 'Rajdhani', sans-serif;"></div>
+    </div>
+
+     <div class="card" id="projects">
+      <h2>
+        <svg class="heading-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+         Projects
+      </h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-image">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/A_Classical_Tesla_Coil_with_Top_Load_Tuning_VIII.jpg" alt="tesla coil img">
+          </div>
+          <div class="project-content">
+            <h3>Tesla Coil</h3>
+            <p>The Tesla coil, invented by Nikola Tesla in 1891, is a resonant transformer that produces high-voltage arcs and demonstrates the principle of wireless electricity transmission—showing how power can move through the air without wires.
+</p>
+            <a href="https://www.facebook.com/share/v/1CGuwXdpgA/" target="_blank" class="project-link">
+              View Project
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-image">
+            <img src="https://imgs.search.brave.com/TsPG52dMlv6Xdtf2MC7D4ZpKxi57NzDmZ7qjL6ZtNeI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/cG11LmVkdS5zYS9B/dHRhY2htZW50cy9B/Y2FkZW1pY3MvSW1h/Z2VzL1VEUC9DQ0VT/L1NtYXJ0LUdsYXNz/ZXMtRm9yLUJsaW5k/LVBlb3BsZS1pbWcx/LlBORw" alt="Smart glasses img">
+          </div>
+          <div class="project-content">
+            <h3>Smart Glasses For Visually Impaired</h3>
+            <p>A smart glass specifically designed for visually impaired individuals, utilizing an ESP8266 microcontroller integrated with an ultrasonic sensor to detect nearby obstacles, which triggers a beep sound through a buzzer.
+</p>
+            <a href="https://www.facebook.com/share/v/1H2fhkXXmK/" target="_blank" class="project-link">
+              View Project
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-image">
+            <img src="https://imgs.search.brave.com/TMMk55sHijzeBNIYN-uvQzARCxyJEpogagw2meGEg-U/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9oYWNr/c3Rlci5pbWdpeC5u/ZXQvdXBsb2Fkcy9h/dHRhY2htZW50cy8x/MjQ5NTkyL19Bd25X/a1hlWTg5LmJsb2I_/YXV0bz1jb21wcmVz/cyxmb3JtYXQmdz05/MDAmaD02NzUmZml0/PW1pbg" alt="home automation img">
+          </div>
+          <div class="project-content">
+            <h3>Home Automation</h3>
+            <p>Home Automation: control a light bulb through PC or Phone remotely from anywhere in this world as long as there is internet connection.</p>
+            <a href="https://www.facebook.com/share/v/16p3wtFakx/" target="_blank" class="project-link">
+              View Project
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-image">
+            <img src="https://dinopixel.com/preload/0123/Dino-game-with-color.png" alt="dino game img">
+          </div>
+          <div class="project-content">
+            <h3>Dino Game</h3>
+            <p>Dino game using Arduino Uno mini , 16x2 LCD display, I2c module, Push Button, Big Breadboard & some jumper wires.
+</p>
+            <a href="https://www.facebook.com/share/v/16oUShVN7y/" target="_blank" class="project-link">
+              View Project
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-image">
+            <img src="https://imgs.search.brave.com/3mI8Kk5r9F_UrLd4n2lNoocWaToLjVCDUR7OaHrSUVw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pb3Rk/ZXNpZ25wcm8uY29t/L3NpdGVzL2RlZmF1/bHQvZmlsZXMvaW5s/aW5lLWltYWdlcy9B/cmR1aW5vLVJvYm90/LUNhci5qcGc" alt="Robotic car image">
+          </div>
+          <div class="project-content">
+            <h3>Robotic Car</h3>
+            <p>A robotic car controlled via Wi-Fi using the Blynk app on my smartphone! This project showcases the integration of IoT technology with robotics, allowing for seamless control and real-time feedback.</p>
+            <a href="https://www.facebook.com/share/v/1627hDtcfs/" target="_blank" class="project-link">
+              View Project
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="experience">
+      <h2>
+        <svg class="heading-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        Experience
+      </h2>
+      <div class="experience-content">
+        <img src="images/cybermindspace.jpg" alt="CYBER MIND SPACE" class="experience-image"/>
+        <div class="experience-details">
+            <h3 style="color: #FF3C3C; margin-top:0;">Took Cybersecurity Course</h3>
+            <h4>📍 Organization: <span style="color: #00f5e1;">CYBER MIND SPACE</span></h4>
+            <p>
+            
+            </p>
+            <div class="experience-links">
+                <a href="https://youtube.com/@cybermindspace?si=m5bs0lZqI-VBoezZ" target="_blank" class="icon-link" title="YouTube">
+                    <svg height="30" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M27.4297 3.12891C27.1297 1.89844 26.1097 0.917969 24.8797 0.617188C22.7097 0.0976562 14.0097 0.0976562 14.0097 0.0976562C14.0097 0.0976562 5.3097 0.0976562 3.1397 0.617188C1.8997 0.917969 0.889703 1.89844 0.589703 3.12891C0.0697031 5.35938 0.0697031 10.0078 0.0697031 10.0078C0.0697031 10.0078 0.0697031 14.6562 0.589703 16.8867C0.889703 18.1172 1.8997 19.0977 3.1397 19.3984C5.3097 19.918 14.0097 19.918 14.0097 19.918C14.0097 19.918 22.7097 19.918 24.8797 19.3984C26.1097 19.0977 27.1297 18.1172 27.4297 16.8867C27.9497 14.6562 27.9497 10.0078 27.9497 10.0078C27.9497 10.0078 27.9497 5.35938 27.4297 3.12891ZM11.2097 14.2891V5.72656L18.4897 10.0078L11.2097 14.2891Z"/>
+                    </svg>
+                </a>
+                <a href="https://cybermindspace.com" target="_blank" class="website-link">cybermindspace.com</a>
+            </div>
+        </div>
+      </div>
+      
+      <div class="tryhackme-badge-container">
+        <h3>TryHackMe</h3>
+        <a href="https://tryhackme.com/p/shadowgarden341" target="_blank" class="badge-link-wrapper">
+          <iframe 
+              src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=4898727" 
+              frameborder="0" 
+              scrolling="no">
+          </iframe>
+        </a>
+        <p>My public TryHackMe profile badge, showcasing my rank and progress.</p>
+      </div>
+
+    </div>
+
+    <div class="card" id="skills">
+      <h2>
+        <svg class="heading-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        Skills
+      </h2>
+      <div class="skill-section-content">
+        <ul>
+          <li>Arduino & NodeMCU Crafts</li>
+          <li>Robotics </li>
+          <li>Automation Projects </li>
+          <li>Nmap,BurpSuite,OWASAP ZAP,Hydra,Wifite,Metasploit,Wireshark </li>
+          <li>Arch & Kali Linux</li>
+          <li>Languages :- Python, HTML, C++ </li>
+          <li>Malware Craft</li>
+        </ul>
+        <div class="skill-image-container">
+          <img src="images/ind.webp" alt="My Skills" class="skill-image">
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="connect">
+      <h2>
+        <svg class="heading-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+        Connect with Me
+      </h2>
+  <a class="social-btn" href="https://www.instagram.com/manish_pathak369/"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="20" style="vertical-align:middle; margin-right:8px;">Instagram</a>
+      <a class="social-btn" href="https://www.facebook.com/manish.pathak.316218/" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" 
+       alt="Facebook" 
+       width="20" 
+       style="vertical-align:middle; margin-right:8px;">
+  Facebook
+
+</a>
+<a class="social-btn" href="https://mail.google.com/mail/?view=cm&to=pathak369manish@gmail.com" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Mail_%28iOS%29.svg" 
+       alt="Email" 
+       width="20" 
+       style="vertical-align:middle; margin-right:8px;">
+  Email
+</a>
+</a>
+<a class="social-btn" href="https://github.com/Smoky369" target="_blank">
+  <img src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" 
+       alt="Email" 
+       width="20" 
+       style="vertical-align:middle; margin-right:8px;">
+  GitHub
+</a>
+
+<script>
+// Matrix background effect
+const canvas = document.getElementById("matrixCanvas");
+const ctx = canvas.getContext("2d");
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+let letters = "01".split("");
+let fontSize = 10;
+let columns = canvas.width / fontSize;
+let drops = Array(Math.floor(columns)).fill(1);
+
+let matrixColor = '#006600';
+
+function draw() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.01)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = matrixColor;
+  ctx.font = fontSize + "px monospace";
+  for (let i = 0; i < drops.length; i++) {
+    const text = letters[Math.floor(Math.random() * letters.length)];
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+    drops[i]++;
+  }
+}
+setInterval(draw, 33);
+
+// Typing effect for the intro text
+let content = ` TECH ENTHUSIAST | STUDENT
+
+print("Hello, World!")
+I’m Manish, an 17-year-old in Tech Field.
+Not a genius. Not a pro.
+Yet,
+I break things to learn, and build to leave a mark.
+Tech is my hobby, my passion, my obsession.
+I’m not there yet…
+But I’m getting closer.
+The world doesn’t know me yet.
+But they will.”👨🏻‍💻
+
+Specialties:
+💻 Linux (I use Arch btw) | 🛡️ Cybersecurity | 🐍 Programming 
+
+                                                 Welcome to the grind. We're just getting started.`;
+
+let i = 0;
+function typeContent() {
+  if (i < content.length) {
+    document.getElementById("content").innerHTML += `<span style='color: white;'>${content.charAt(i)}</span>`;
+    i++;
+    setTimeout(typeContent, 18);
+  } else {
+    document.getElementById("content").innerHTML += "<span class='cursor'>|</span>";
+  }
+}
+typeContent();
+
+// Falling title animation
+window.addEventListener('load', () => {
+    const titleText = "whoAmi";
+    const titleContainer = document.getElementById('animated-title-main');
+    titleText.split('').forEach((char, index) => {
+        const span = document.createElement('span');
+        if(char === ' ') {
+            span.innerHTML = '&nbsp;';
+        } else {
+            span.textContent = char;
+        }
+        span.style.animationDelay = `${index * 0.1}s`;
+        titleContainer.appendChild(span);
+    });
+});
+
+// --- Intersection Observer for scroll animations ---
+document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll('.card');
+
+    const observerOptions = {
+        root: null, // observes intersections relative to the viewport
+        rootMargin: '0px',
+        threshold: 0.1 // trigger when 10% of the element is visible
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Optional: stop observing the element once it's visible
+                // observer.unobserve(entry.target); 
+            }
+        });
+    }, observerOptions);
+
+    cards.forEach(card => {
+        observer.observe(card);
+    });
+});
+</script>
+
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('light-mode');
+    }
+  </script>
+
+
+</body>
+ 
+</html>
