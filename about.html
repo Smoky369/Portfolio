@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About MANISH</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&family=Audiowide&family=Russo+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body
+   {
+      margin: 0;
+      background: black;
+      font-family: 'Rajdhani', sans-serif;
+      color: #00ffcc;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+      padding: 2rem;
+      max-width: 950px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .card {
+      border: 2px solid #00ff99;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 0 25px rgba(0, 255, 153, 0.4);
+      position: relative;
+      overflow: hidden;
+      /* --- Animation Style --- */
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    /* --- Style for when card is visible --- */
+    .card.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+
+    /* --- Original Slideshow --- */
+    .card#about, .card#trajectory, .card#projects, .card#skills, .card#experience, .card#connect {
+        background: none; /* Remove static background */
+        animation: aboutSlideshow 48s linear infinite;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    @keyframes aboutSlideshow {
+        0%, 100% { background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/mall.jpg'); }
+        25% { background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/bgg.jpg'); }
+        50% { background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/roct.jpg'); }
+        75% { background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/bhole.jpg'); }
+    }
+
+
+    .card h1 {
+      margin-top: 0;
+      font-family: 'Orbitron', monospace;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .falling-title span {
+        display: inline-block;
+        opacity: 0;
+        animation: fallIn 0.5s forwards;
+    }
+
+    @keyframes fallIn {
+        from {
+            transform: translateY(-50px) rotate(-10deg);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+        }
+    }
+
+    @keyframes titleGradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+
+    .card h2 {
+      color: #FF00FF;
+      font-family: 'Orbitron', monospace;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(90deg, #FF00FF, #00f5e1, #FF3C3C);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+    .card h3 {
+       color: #FF00FF;
+       font-family: 'Orbitron', monospace;
+    }
+    .heading-logo {
+        width: 28px;
+        height: 28px;
+        stroke: currentColor;
+        stroke-width: 1.5;
+        flex-shrink: 0;
+        fill: none;
+    }
+    .highlight {
+      color: #FF3C3C;
+      font-weight: bold;
+    }
+    .subtext {
+      color: white;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    ul li {
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+    #content {
+      white-space: pre-wrap;
+      line-height: 1.6;
+      color: #00ff99;
+      font-weight: 600;
+    }
+    .cursor {
+      color: #FF3C3C;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      50.01%,100% { opacity: 0; }
+    }
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 10px 10px 0 0;
+      padding: 10px 20px;
+      border: 2px solid #00ff99;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #00ff99;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+    .social-btn:hover {
+      background: #00ff99;
+      color: #000;
+    }
+    .social-btn img.white-filter {
+        filter: brightness(0) invert(1);
+    }
+    p, li, span, h4, h5, h6 {
+        color: #ffffff;
+        text-shadow: none;
+        font-family: 'Rajdhani', sans-serif;
+        letter-spacing: 0.5px;
+    }
+    
+    /* --- About Me Section Image (techy irregular frame) --- */
+    .about-image-container {
+      float: right;
+      margin-left: 2rem;
+      margin-bottom: 2rem;
+      width: 320px; /* more space for the frame and accents */
+    }
+
+    .tech-frame {
+      width: 320px;
+      height: 320px;
+      position: relative;
+      margin: 0 auto;
+      padding: 10px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.2));
+      box-shadow: 0 18px 50px rgba(0,0,0,0.7), 0 0 40px rgba(0,245,225,0.06);
+      transition: transform 0.45s cubic-bezier(.2,.9,.2,1), box-shadow 0.45s ease;
+      clip-path: polygon(12% 4%, 82% 0%, 100% 20%, 92% 64%, 68% 96%, 36% 90%, 8% 64%, 0% 20%);
+      -webkit-clip-path: polygon(12% 4%, 82% 0%, 100% 20%, 92% 64%, 68% 96%, 36% 90%, 8% 64%, 0% 20%);
+      overflow: visible;
+      background-clip: padding-box;
+    }
+
+    /* neon outline behind the irregular shape */
+    .tech-frame::before {
+      content: '';
+      position: absolute;
+      left: -6px;
+      top: -6px;
+      right: -6px;
+      bottom: -6px;
+      z-index: 0;
+      filter: blur(12px);
+      background: conic-gradient(from 120deg, rgba(0,245,225,0.15), rgba(138,43,226,0.12), rgba(255,0,255,0.12));
+      clip-path: inherit;
+      -webkit-clip-path: inherit;
+      pointer-events: none;
+    }
+
+    /* subtle glitch overlay using the same image as background */
+    .tech-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background-image: var(--img);
+      background-size: cover;
+      background-position: center;
+      mix-blend-mode: screen;
+      opacity: 0.16;
+      pointer-events: none;
+      transform: translate3d(0,0,0);
+      transition: opacity 0.25s ease;
+      animation: glitchShift 3.5s infinite linear;
+    }
+
+    @keyframes glitchShift {
+      0%, 100% { transform: translateX(0) skewX(0deg); opacity: 0.16; }
+      8% { transform: translateX(-10px) skewX(-3deg); opacity: 0.28; }
+      10% { transform: translateX(10px) skewX(3deg); opacity: 0.28; }
+      28% { transform: translateX(0) skewX(0deg); opacity: 0.16; }
+      48% { transform: translateX(-8px) skewX(-2.5deg); opacity: 0.22; }
+      50% { transform: translateX(8px) skewX(2.5deg); opacity: 0.22; }
+      76% { transform: translateX(0) skewX(0deg); opacity: 0.16; }
+    }
+
+    /* stronger micro-glitch on hover */
+    .tech-frame:hover::after { opacity: 0.28; animation-duration: 1.6s; }
+
+    /* layered glitch spans for stronger effect */
+    .glitch-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      background-image: var(--img);
+      background-size: cover;
+      background-position: center;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      opacity: 0.18;
+      transform: translateZ(0);
+      will-change: transform, clip-path, opacity;
+    }
+    .glitch-layer.g1 { animation: glitchSlice1 2s infinite steps(1); filter: drop-shadow(0 0 6px rgba(0,255,153,0.08)); }
+    .glitch-layer.g2 { animation: glitchSlice2 2.6s infinite steps(1); filter: hue-rotate(30deg) drop-shadow(0 0 4px rgba(138,43,226,0.06)); opacity: 0.14; }
+
+    @keyframes glitchSlice1 {
+      0% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+      6% { clip-path: inset(8% 0 74% 0); transform: translateX(-18px); }
+      8% { clip-path: inset(8% 0 74% 0); transform: translateX(18px); }
+      12% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+      40% { clip-path: inset(30% 0 40% 0); transform: translateX(-10px); }
+      42% { clip-path: inset(30% 0 40% 0); transform: translateX(12px); }
+      60% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+      100% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+    }
+
+    @keyframes glitchSlice2 {
+      0% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+      14% { clip-path: inset(60% 0 8% 0); transform: translateX(12px); }
+      16% { clip-path: inset(60% 0 8% 0); transform: translateX(-12px); }
+      36% { clip-path: inset(12% 0 68% 0); transform: translateX(10px); }
+      38% { clip-path: inset(12% 0 68% 0); transform: translateX(-10px); }
+      58% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+      100% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+    }
+
+    .tech-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      position: relative;
+      z-index: 2;
+      clip-path: inherit;
+      -webkit-clip-path: inherit;
+      transform-origin: center;
+      transition: transform 0.45s ease, filter 0.35s ease;
+      background: #000;
+    }
+
+    .tech-frame:hover {
+      transform: translateY(-6px) rotate(3deg) scale(1.02);
+      box-shadow: 0 28px 80px rgba(0,0,0,0.8), 0 0 60px rgba(138,43,226,0.18);
+    }
+    .tech-frame:hover .tech-photo {
+      transform: scale(1.015) rotate(-1deg);
+      filter: saturate(1.08) contrast(1.02);
+    }
+
+    /* small tech accents (glowing lines) */
+    .tech-accent {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(0,245,225,0.95), rgba(138,43,226,0.9));
+      box-shadow: 0 0 10px rgba(0,245,225,0.6), 0 0 18px rgba(138,43,226,0.35);
+      z-index: 3;
+      mix-blend-mode: screen;
+      border-radius: 2px;
+      opacity: 0.95;
+      transition: transform 0.35s ease, opacity 0.35s ease;
+    }
+    .tech-accent.a1 { width: 48%; left: 6%; top: 18%; transform: rotate(-12deg); }
+    .tech-accent.a2 { width: 36%; right: 4%; bottom: 20%; transform: rotate(22deg); }
+    .tech-accent.a3 { width: 28%; left: 18%; bottom: 10%; transform: rotate(-6deg); opacity: 0.6; }
+
+    .tech-frame:hover .tech-accent { transform: translateX(4px) rotate(2deg); opacity: 1; }
+
+    @media (max-width: 768px) {
+      .about-image-container { float: none; margin: 0 auto 1.5rem auto; width: 260px; }
+      .tech-frame { width: 260px; height: 260px; }
+    }
+
+    /* --- Name frame below the profile (irregular, techy) --- */
+    .tech-name-frame {
+      width: 320px;
+      margin: 12px auto 0 auto;
+      padding: 10px 16px;
+      color: #00f5e1;
+      font-family: 'Orbitron', monospace;
+      font-size: 1.05rem;
+      text-align: center;
+      position: relative;
+      clip-path: polygon(6% 14%, 92% 6%, 98% 46%, 78% 92%, 38% 86%, 12% 60%);
+      background: linear-gradient(180deg, rgba(2,8,10,0.6), rgba(0,0,0,0.35));
+      border: 1px solid rgba(0,245,225,0.22);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 18px rgba(0,245,225,0.05);
+      -webkit-clip-path: polygon(6% 14%, 92% 6%, 98% 46%, 78% 92%, 38% 86%, 12% 60%);
+    }
+    .tech-name-frame::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      z-index: -1;
+      filter: blur(10px);
+      background: linear-gradient(90deg, rgba(0,245,225,0.08), rgba(138,43,226,0.06));
+      clip-path: inherit;
+      -webkit-clip-path: inherit;
+      pointer-events: none;
+    }
+    .name-fade {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    .name-fade.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      .tech-name-frame { width: 260px; }
+    }
+
+    /* --- Experience Section Styles --- */
+    .experience-content {
+        display: flex;
+        gap: 1.5rem;
+        align-items: flex-start;
+    }
+    .experience-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 10px;
+        border: 2px solid #00ff99;
+        object-fit: cover;
+        flex-shrink: 0;
+    }
+    .experience-details {
+        flex: 1;
+    }
+    .experience-links {
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    /* Certificate thumbnail and modal styles */
+    .certificate-wrapper {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .certificate-thumb {
+      width: 110px;
+      height: 78px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1.5px solid rgba(0,245,225,0.18);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .certificate-thumb:hover, .certificate-thumb:focus {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 12px 28px rgba(0,245,225,0.12);
+      outline: none;
+    }
+
+    .cert-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.8);
+      z-index: 3000;
+      padding: 24px;
+    }
+    .cert-modal.open { display: flex; }
+    .cert-modal img {
+      max-width: 92%;
+      max-height: 92%;
+      border-radius: 6px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 60px rgba(0,245,225,0.06);
+      border: 2px solid rgba(255,255,255,0.02);
+    }
+    .cert-close {
+      position: absolute;
+      right: 22px;
+      top: 18px;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 28px;
+      cursor: pointer;
+      z-index: 3010;
+    }
+    .icon-link svg {
+        transition: transform 0.3s ease;
+        fill: #FF00FF;
+    }
+    .icon-link:hover svg {
+        transform: scale(1.15);
+        fill: #00f5e1;
+    }
+    .website-link {
+        color: #00f5e1;
+        text-decoration: none;
+        border-bottom: 1px dotted #00f5e1;
+        transition: color 0.3s ease;
+    }
+    .website-link:hover {
+        color: #FF00FF;
+    }
+
+    /* --- TryHackMe Badge Styles --- */
+    .tryhackme-badge-container {
+        text-align: left; 
+        margin-top: 2.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(0, 191, 255, 0.2);
+    }
+    .tryhackme-badge-container h3 {
+        margin-bottom: 1rem;
+        color: #FF3C3C;
+    }
+    .badge-link-wrapper {
+        display: inline-block;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .badge-link-wrapper:hover iframe {
+        box-shadow: 0 0 30px rgba(0, 191, 255, 0.9);
+    }
+     .badge-link-wrapper:hover {
+        transform: translateY(-5px);
+    }
+    .badge-link-wrapper iframe {
+        display: block;
+        width: 100%;
+        max-width: 400px;
+        height: 85px;
+        border-radius: 10px;
+        border: none; 
+        box-shadow: 0 0 15px rgba(0, 191, 255, 0.5);
+        transition: all 0.3s ease;
+    }
+    .tryhackme-badge-container p {
+        font-size: 0.9em;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 1rem;
+    }
+    
+    /* --- Page Navigation Styles --- */
+    .page-nav {
+        z-index: 1001;
+        display: flex;
+        flex-direction: row; /* Changed from column to row */
+        flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
+        justify-content: center; /* Centers the buttons */
+        gap: 15px; /* Space between buttons */
+        padding: 20px 10px; /* Padding around the nav bar */
+        width: 100%;
+        box-sizing: border-box;
+        position: relative; /* Changed from fixed */
+        background-color: rgba(0, 10, 5, 0.5); /* Optional: adds a subtle background */
+        backdrop-filter: blur(5px);
+    }
+    .nav-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 15px;
+        font-family: 'Orbitron', monospace;
+        font-size: 0.9em;
+        color: #00ff99;
+        text-decoration: none;
+        background-color: rgba(0, 25, 15, 0.7);
+        border: 1px solid #00ff99;
+        border-radius: 5px;
+        backdrop-filter: blur(8px);
+        transition: all 0.4s ease;
+        position: relative;
+        z-index: 1;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 10% 100%, 0 75%);
+    }
+    .nav-box:hover {
+        color: #000;
+        background-color: #00ff99;
+        transform: translateY(-5px); /* Changed hover effect */
+        box-shadow: 0 0 25px rgba(0, 255, 153, 0.7);
+        clip-path: polygon(0 0, 100% 0, 100% 80%, 0% 100%, 0 0);
+    }
+    .nav-box svg {
+        width: 18px;
+        height: 18px;
+        stroke: #00ff99;
+        transition: all 0.4s ease;
+    }
+    .nav-box:hover svg {
+        stroke: #000;
+        transform: rotate(10deg) scale(1.1);
+    }
+
+    /* --- Skill Section Styles --- */
+    .skill-section-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+    .skill-image-container {
+        text-align: center;
+        flex-shrink: 0;
+        order: 2;
+    }
+    .skill-image {
+        width: 250px;
+        height: auto;
+        border-radius: 15px;
+        opacity: 0.3;
+        mix-blend-mode: screen;
+        transition: opacity 0.3s ease;
+    }
+    .skill-image:hover {
+        opacity: 0.6;
+    }
+    .card#skills ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        flex-grow: 1;
+        max-width: 50%;
+        order: 1;
+    }
+    .card#skills ul li {
+        margin-bottom: 0.5rem;
+        color: white;
+        padding-left: 20px;
+        position: relative;
+        font-weight: 700;
+        transition: all 0.3s ease;
+    }
+
+    .card#skills ul li:hover {
+        transform: translateX(8px);
+        filter: brightness(1.2);
+    }
+    .card#skills ul li::before {
+        content: '▸';
+        color: #00ffcc;
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+        font-size: 1.2em;
+        animation: bulletPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes bulletPulse {
+      0%, 100% {
+        opacity: 1;
+        text-shadow: 0 0 5px #00ffcc;
+      }
+      50% {
+        opacity: 0.7;
+        text-shadow: 0 0 15px #00f5e1;
+      }
+    }
+    
+    /* trajectory section styles (new) */
+    .trajectory-section-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 2rem;
+      flex-wrap: wrap;
+      padding: 1rem 0;
+    }
+    .trajectory-center {
+      text-align: center;
+      flex: 0 0 260px;
+    }
+    .trajectory-logo {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 18px rgba(0,245,225,0.06);
+      border: 1px solid rgba(0,255,153,0.08);
+      margin-top: -16px; /* lift logo frame slightly */
+      margin-bottom: 12px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.15));
+    }
+    .trajectory-logo:hover {
+      transform: scale(1.04);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.72);
+    }
+    .trajectory-org-name {
+      color: #00f5e1;
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.6px;
+    }
+    .trajectory-list {
+      flex: 1 1 40%;
+      list-style: none;
+      padding-left: 20px;
+      margin: 0;
+    }
+    .trajectory-list li {
+      margin-bottom: 0.6rem;
+      color: white;
+      font-weight: 600;
+      padding-left: 20px;
+      position: relative;
+    }
+    .trajectory-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: #00ff99;
+      font-weight: bold;
+    }
+    /* Org logo modal styles */
+    .org-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.85);
+      z-index: 4000;
+      padding: 24px;
+    }
+    .org-modal.open { display: flex; }
+    .org-modal img {
+      width: min(82vmin, 720px);
+      height: min(82vmin, 720px);
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 60px rgba(0,245,225,0.06);
+      border: 4px solid rgba(255,255,255,0.04);
+      background: #000;
+    }
+    .org-close {
+      position: absolute;
+      right: 22px;
+      top: 18px;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 28px;
+      cursor: pointer;
+      z-index: 4010;
+    }
+
+    /* --- Project Section Styles --- */
+    .project-card.upcoming {
+      background: linear-gradient(135deg, rgba(255, 60, 60, 0.08), rgba(255, 100, 100, 0.05));
+      border: 2px dashed #FF3C3C;
+    }
+
+    .project-card.upcoming:hover {
+      box-shadow: 0 0 30px rgba(255, 60, 60, 0.5);
+      border-color: #FF5555;
+    }
+
+    .working-on-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      background: #FF3C3C;
+      color: white;
+      border-radius: 20px;
+      font-size: 0.85em;
+      font-weight: bold;
+      margin-bottom: 0.8rem;
+      animation: badgePulse 2s ease-in-out infinite;
+    }
+
+    @keyframes badgePulse {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+      }
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+    .project-card {
+      background: rgba(10, 25, 20, 0.5);
+      border: 1px solid #00ff99;
+      border-radius: 10px;
+      transition: all 0.4s ease-in-out;
+      box-shadow: 0 0 10px rgba(0, 255, 153, 0.2);
+      overflow: hidden;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 0 30px rgba(0, 255, 153, 0.7);
+      border-color: #00f5e1;
+    }
+    .project-image {
+        height: 180px;
+        overflow: hidden;
+    }
+    .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: all 0.4s ease;
+        filter: grayscale(40%) brightness(0.8);
+    }
+    .project-card:hover .project-image img {
+        transform: scale(1.1);
+        filter: grayscale(0%) brightness(1);
+    }
+    .project-content {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+    .project-card h3 {
+      font-family: 'Russo One', sans-serif;
+      font-size: 1.7rem; 
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(45deg, #00f5e1, #8a2be2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+    .project-card p {
+      font-size: 1em;
+      line-height: 1.5;
+      flex-grow: 1;
+      margin-bottom: 1rem;
+      color: #00ff99;
+    }
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: auto;
+      padding: 10px 18px;
+      background-image: linear-gradient(45deg, #ff00ff, #8a2be2);
+      border: none;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: 600;
+      font-family: 'Orbitron', monospace;
+      transition: all 0.3s ease;
+      align-self: flex-start;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .project-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.5s ease;
+      z-index: -1;
+    }
+    .project-link:hover::before {
+      left: 100%;
+    }
+    .project-link:hover {
+      box-shadow: 0 0 20px #ff00ff, 0 0 30px #8a2be2;
+      transform: scale(1.05);
+    }
+    .project-link svg {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.3s ease;
+    }
+    .project-link:hover svg {
+        transform: translateX(4px);
+    }
+    
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .about-image-container {
+            float: none;
+            display: block;
+            margin: 0 auto 1.5rem auto;
+            text-align: center;
+        }
+        .skill-image {
+            width: 80%;
+        }
+        .skill-section-content {
+            flex-direction: column;
+        }
+        .card#skills ul {
+            width: 100%;
+            text-align: center;
+            max-width: 100%;
+        }
+        .card#skills ul li {
+            text-align: left;
+            margin: 0 auto 0.5rem auto;
+            max-width: fit-content;
+        }
+        .skill-image-container {
+            order: 1;
+        }
+        .card#skills ul {
+            order: 2;
+        }
+    }
+    @media (max-width: 600px) {
+        .experience-content {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .experience-links {
+            justify-content: center;
+        }
+        .tryhackme-badge-container {
+            text-align: center;
+        }
+    }
+
+    /* --- Footer Styles --- */
+    footer {
+        background-color: rgba(0, 10, 5, 0.5);
+        backdrop-filter: blur(5px);
+        border-top: 1px solid rgba(0, 255, 153, 0.2);
+        padding: 2rem;
+        margin-top: 3rem;
+        text-align: center;
+        color: #ffffff;
+        box-sizing: border-box;
+    }
+    footer p {
+        margin: 0.5rem 0;
+        font-size: 0.95rem;
+        color: #ffffff;
+        letter-spacing: 0.3px;
+    }
+    .footer-links {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem;
+        margin: 1.5rem 0;
+    }
+    .footer-link {
+        color: #00ff99;
+        text-decoration: none;
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        border-bottom: 1px dotted #00ff99;
+        padding-bottom: 2px;
+    }
+    .footer-link:hover {
+        color: #FF00FF;
+        border-color: #FF00FF;
+        text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    }
+    .footer-credit {
+        margin-top: 1.5rem;
+        font-size: 0.85rem;
+        color: #00f5e1;
+        letter-spacing: 0.4px;
+    }
+    .footer-credit a {
+        color: #FF00FF;
+        text-decoration: none;
+        font-weight: 700;
+        transition: all 0.3s ease;
+    }
+    .footer-credit a:hover {
+        color: #00ff99;
+        text-shadow: 0 0 15px rgba(0, 255, 153, 0.6);
+    }
+
+    /* Download CV Button */
+    .download-cv-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #FF00FF, #8a2be2);
+        color: white;
+        border: 2px solid #00ff99;
+        border-radius: 8px;
+        font-family: 'Orbitron', monospace;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 15px rgba(255, 0, 255, 0.4), 0 0 25px rgba(0, 255, 153, 0.2);
+        z-index: 10;
+    }
+    .download-cv-btn:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 0 25px rgba(255, 0, 255, 0.7), 0 0 40px rgba(0, 255, 153, 0.5);
+        background: linear-gradient(135deg, #FF3C3C, #FF00FF);
+    }
+    .download-cv-btn:active {
+        transform: translateY(-1px) scale(1.02);
+    }
+    .download-cv-btn svg {
+        width: 18px;
+        height: 18px;
+        stroke: currentColor;
+        stroke-width: 2;
+    }
+  </style>
+</head>
+<body class="matrix">
+  <canvas id="matrixCanvas"></canvas>
+  
+  <nav class="page-nav">
+    <a href="#about" class="nav-box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      About
+    </a>
+    <a href="#trajectory" class="nav-box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M12 3v18"/></svg>
+      Trajectory
+    </a>
+    <a href="#projects" class="nav-box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+      Projects
+    </a>
+    </a>
+    <a href="#experience" class="nav-box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      Experience
+    </a>
+    <a href="#skills" class="nav-box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+      Skills
+    </a>
+    <a href="#connect" class="nav-box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+      Connect
+    </a>
+  </nav>
+
+  <div class="container">
+    <div class="card" id="about">
+      <a href="images/cv.pdf" download class="download-cv-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Download CV
+      </a>
+      <div class="about-image-container">
+      <div class="tech-frame" style="--img: url('images/me.jpeg')">
+        <img src="images/me.jpeg" alt="Profile Image" class="tech-photo">
+        <span class="glitch-layer g1" aria-hidden="true"></span>
+        <span class="glitch-layer g2" aria-hidden="true"></span>
+        <span class="tech-accent a1"></span>
+        <span class="tech-accent a2"></span>
+        <span class="tech-accent a3"></span>
+      </div>
+      <div class="tech-name-frame">
+        <span id="tech-name" class="name-fade visible">Manish Pathak</span>
+      </div>
+    </div>
+
+
+      <h1 class="falling-title" style="
+          font-family: 'Press Start 2P', monospace;
+          font-size: 2.5em;
+          background: linear-gradient(90deg, #00ffff, #00ffcc, #00f5e1, #FF00FF);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          font-weight: normal;
+          text-shadow: none;
+          background-size: 200% 200%;
+          animation: titleGradient 3s ease infinite, pulse 2s ease-in-out infinite;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        ">
+        <svg class="heading-logo" style="width: 40px; height: 40px; stroke: #00ffff;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <span id="animated-title-main"></span>
+      </h1>
+      <div id="content" style="font-family: 'Rajdhani', sans-serif;"></div>
+    </div>
+
+    <div class="card" id="trajectory">
+      <h2>
+        <svg class="heading-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M12 3v18"/></svg>
+        Trajectory
+      </h2>
+      <div class="trajectory-section-content">
+        <ul class="trajectory-list">
+          <li>Found a organization focused on aerospace & technology</li>
+          <li>Rise Nepal in the field of space exploration</li>
+          <li>Build a team and community around space projects</li>
+        </ul>
+        <div class="trajectory-center">
+          <img src="images/agency.jpeg" alt="Future Org Logo" class="trajectory-logo">
+          <div class="trajectory-org-name">Astrocelestial Bodies Exploration Organization</div>
+        </div>
+      </div>
+    </div>
+
+     <div class="card" id="projects">
+      <h2>
+        <svg class="heading-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+         Projects
+      </h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-image">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/A_Classical_Tesla_Coil_with_Top_Load_Tuning_VIII.jpg" alt="tesla coil img">
+          </div>
+          <div class="project-content">
+            <h3>Tesla Coil</h3>
+            <p>The Tesla coil, invented by Nikola Tesla in 1891, is a resonant transformer that produces high-voltage arcs and demonstrates the principle of wireless electricity transmission—showing how power can move through the air without wires.
+</p>
+            <a href="https://www.facebook.com/share/v/1CGuwXdpgA/" target="_blank" class="project-link">
+              View Project
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-image">
+            <img src="https://imgs.search.brave.com/TsPG52dMlv6Xdtf2MC7D4ZpKxi57NzDmZ7qjL6ZtNeI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/cG11LmVkdS5zYS9B/dHRhY2htZW50cy9B/Y2FkZW1pY3MvSW1h/Z2VzL1VEUC9DQ0VT/L1NtYXJ0LUdsYXNz/ZXMtRm9yLUJsaW5k/LVBlb3BsZS1pbWcx/LlBORw" alt="Smart glasses img">
+          </div>
+          <div class="project-content">
+            <h3>Smart Glasses For Visually Impaired</h3>
+            <p>A smart glass specifically designed for visually impaired individuals, utilizing an ESP8266 microcontroller integrated with an ultrasonic sensor to detect nearby obstacles, which triggers a beep sound through a buzzer.
+</p>
+            <a href="https://www.facebook.com/share/v/1H2fhkXXmK/" target="_blank" class="project-link">
+              View Project
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-image">
+            <img src="https://imgs.search.brave.com/TMMk55sHijzeBNIYN-uvQzARCxyJEpogagw2meGEg-U/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9oYWNr/c3Rlci5pbWdpeC5u/ZXQvdXBsb2Fkcy9h/dHRhY2htZW50cy8x/MjQ5NTkyL19Bd25X/a1hlWTg5LmJsb2I_/YXV0bz1jb21wcmVz/cyxmb3JtYXQmdz05/MDAmaD02NzUmZml0/PW1pbg" alt="home automation img">
+          </div>
+          <div class="project-content">
+            <h3>Home Automation</h3>
+            <p>Home Automation: control a light bulb through PC or Phone remotely from anywhere in this world as long as there is internet connection.</p>
+            <a href="https://www.facebook.com/share/v/16p3wtFakx/" target="_blank" class="project-link">
+              View Project
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-image">
+            <img src="https://www.hindustantimes.com/ht-img/img/2023/04/28/1600x900/google-chrome-dino-game-job-interview-viral_1682678000541_1682678009654.jpg" alt="dino game img">
+          </div>
+          <div class="project-content">
+            <h3>Dino Game</h3>
+            <p>Dino game using Arduino Uno mini , 16x2 LCD display, I2c module, Push Button, Big Breadboard & some jumper wires.
+</p>
+            <a href="https://www.facebook.com/share/v/16oUShVN7y/" target="_blank" class="project-link">
+              View Project
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-image">
+            <img src="https://imgs.search.brave.com/3mI8Kk5r9F_UrLd4n2lNoocWaToLjVCDUR7OaHrSUVw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pb3Rk/ZXNpZ25wcm8uY29t/L3NpdGVzL2RlZmF1/bHQvZmlsZXMvaW5s/aW5lLWltYWdlcy9B/cmR1aW5vLVJvYm90/LUNhci5qcGc" alt="Robotic car image">
+          </div>
+          <div class="project-content">
+            <h3>Robotic Car</h3>
+            <p>A robotic car controlled via Wi-Fi using the Blynk app on my smartphone! This project showcases the integration of IoT technology with robotics, allowing for seamless control and real-time feedback.</p>
+            <a href="https://www.facebook.com/share/v/1627hDtcfs/" target="_blank" class="project-link">
+              View Project
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+        <div class="project-card upcoming">
+          <div class="project-image">
+            <img src="images/mroct.png" alt="Upcoming project">
+          </div>
+          <div class="project-content">
+            <div class="working-on-badge">⚙️ Working On</div>
+            <h3>Model Rocket</h3>
+            <p>Something amazing is in the works! This groundbreaking project is currently being developed and will push the boundaries of my current skills and knowledge. Stay tuned for updates!</p>
+            <a href="#" class="project-link" style="background: #FF3C3C; cursor: not-allowed; opacity: 0.6;">
+              Coming Soon
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="experience">
+      <h2>
+        <svg class="heading-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        Experience
+      </h2>
+      <div class="experience-content">
+        <img src="images/cybermindspace.jpg" alt="CYBER MIND SPACE" class="experience-image"/>
+        <div class="experience-details">
+            <h3 style="color: #FF3C3C; margin-top:0;">Took Cybersecurity Course</h3>
+            <h4>📍 Organization: <span style="color: #00f5e1;">CYBER MIND SPACE</span></h4>
+            <p>
+            
+            </p>
+            <div class="experience-links">
+                <a href="https://youtube.com/@cybermindspace?si=m5bs0lZqI-VBoezZ" target="_blank" class="icon-link" title="YouTube">
+                    <svg height="30" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M27.4297 3.12891C27.1297 1.89844 26.1097 0.917969 24.8797 0.617188C22.7097 0.0976562 14.0097 0.0976562 14.0097 0.0976562C14.0097 0.0976562 5.3097 0.0976562 3.1397 0.617188C1.8997 0.917969 0.889703 1.89844 0.589703 3.12891C0.0697031 5.35938 0.0697031 10.0078 0.0697031 10.0078C0.0697031 10.0078 0.0697031 14.6562 0.589703 16.8867C0.889703 18.1172 1.8997 19.0977 3.1397 19.3984C5.3097 19.918 14.0097 19.918 14.0097 19.918C14.0097 19.918 22.7097 19.918 24.8797 19.3984C26.1097 19.0977 27.1297 18.1172 27.4297 16.8867C27.9497 14.6562 27.9497 10.0078 27.9497 10.0078C27.9497 10.0078 27.9497 5.35938 27.4297 3.12891ZM11.2097 14.2891V5.72656L18.4897 10.0078L11.2097 14.2891Z"/>
+                    </svg>
+                </a>
+                <a href="https://cybermindspace.com" target="_blank" class="website-link">cybermindspace.com</a>
+            </div>
+              <div class="certificate-wrapper">
+                <img src="images/aoc.png" alt="AOC Certificate" class="certificate-thumb" id="cert-thumb" tabindex="0">
+                <span style="color: #bfeff0; font-size: 0.9rem;">AOC Certificate</span>
+              </div>
+        </div>
+      </div>
+
+      <div class="tryhackme-badge-container">
+        <h3>TryHackMe</h3>
+        <a href="https://tryhackme.com/p/shadowgarden341" target="_blank" class="badge-link-wrapper">
+          <iframe 
+              src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=5997240" 
+              frameborder="0" 
+              scrolling="no">
+          </iframe>
+        </a>
+        <p>My public TryHackMe profile badge, showcasing my rank and progress.</p><hr>
+        <h3 style="color:#FF3C3C; margin-top:0.5rem;">Academic Certification</h3>
+        <p style="color:#bfeff0; margin:6px 0 8px 0;">Class 10 Certificate</p>
+        <div class="certificate-wrapper">
+          <img src="images/cert10.jpeg" alt="Cert 10" class="certificate-thumb" data-caption="Cybersecurity Course Certificate" tabindex="0">
+          <span style="color: #bfeff0; font-size: 0.9rem;"></span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card" id="skills">
+      <h2>
+        <svg class="heading-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        Skills
+      </h2>
+      <div class="skill-section-content">
+        <ul>
+          <li>Arduino & NodeMCU Crafts</li>
+          <li>Robotics </li>
+          <li>Automation Projects </li>
+          <li>Nmap,BurpSuite,OWASAP ZAP,Hydra,Wifite,Metasploit,Wireshark </li>
+          <li>Arch & Kali Linux</li>
+          <li>Languages :- Python, HTML, C </li>
+          <li>Malware Craft</li>
+        </ul>
+        <div class="skill-image-container">
+          <img src="images/sat.png" alt="My Skills" class="skill-image">
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="connect">
+      <h2>
+        <svg class="heading-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+        Connect with Me
+      </h2>
+  <a class="social-btn" href="https://www.instagram.com/manish_pathak369/"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="20" style="vertical-align:middle; margin-right:8px;">Instagram</a>
+      <a class="social-btn" href="https://www.facebook.com/manish.pathak.316218/" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" 
+       alt="Facebook" 
+       width="20" 
+       style="vertical-align:middle; margin-right:8px;">
+  Facebook
+
+</a>
+</a>
+</a>
+<a class="social-btn" href="https://github.com/Smoky369" target="_blank">
+  <img src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" 
+       alt="GitHub" 
+       width="20" 
+       style="vertical-align:middle; margin-right:8px;">
+  GitHub
+</a>
+<a class="social-btn" href="https://www.linkedin.com/in/manish-pathak-3696133a1/" target="_blank">
+  <img src="images/linkin.png" 
+       alt="LinkedIn" 
+       width="20" 
+       style="vertical-align:middle; margin-right:8px;">
+  LinkedIn
+</a>
+<a class="social-btn" href="https://mail.google.com/mail/?view=cm&to=pathak369manish@gmail.com" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Mail_%28iOS%29.svg" 
+       alt="Email" 
+       width="20" 
+       style="vertical-align:middle; margin-right:8px;">
+  Email
+</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#about" class="footer-link">About</a>
+      <a href="#projects" class="footer-link">Projects</a>
+      <a href="https://github.com/Smoky369" target="_blank" class="footer-link">GitHub</a>
+      <a href="https://www.linkedin.com/in/manish-pathak-3696133a1/" target="_blank" class="footer-link">LinkedIn</a>
+    </div>
+    <p>© 2026 All Rights Reserved</p>
+    <div class="footer-credit">
+      Developed with <span style="color: #FF3C3C;">❤</span> by <a href="#about">Manish Pathak</a>
+    </div>
+  </footer>
+
+<script>
+// Matrix background effect
+const canvas = document.getElementById("matrixCanvas");
+const ctx = canvas.getContext("2d");
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  columns = Math.floor(canvas.width / fontSize);
+  drops = Array(Math.max(1, columns)).fill(1);
+}
+
+let letters = "01".split("");
+let fontSize = 10;
+let columns = 0;
+let drops = [];
+resizeCanvas();
+
+let matrixColor = '#006600';
+
+
+function draw() {
+  // slight opacity to leave faint trails for both matrix and comets
+  ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // matrix rain
+  ctx.fillStyle = matrixColor;
+  ctx.font = fontSize + "px monospace";
+  for (let i = 0; i < drops.length; i++) {
+    const text = letters[Math.floor(Math.random() * letters.length)];
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+    drops[i]++;
+  }
+
+  // comets
+    // (comets removed)
+}
+
+window.addEventListener('resize', resizeCanvas);
+setInterval(draw, 33);
+
+// Name rotation script (cycles displayed name in different languages)
+;(function(){
+  const variants = [
+    'Manish Pathak',
+    'मनिष पाठक',
+    'マニシュ・パタク',
+    '马尼什·帕塔克',
+    'Маниш Патак',
+    'مانِش پاٹھک',
+    '마니시 파탁'
+  ];
+  let idx = 0;
+  const el = document.getElementById('tech-name');
+  if (!el) return;
+  el.textContent = variants[0];
+  // ensure visible class
+  el.classList.add('visible');
+  function showNext() {
+    el.classList.remove('visible');
+    setTimeout(() => {
+      idx = (idx + 1) % variants.length;
+      el.textContent = variants[idx];
+      el.classList.add('visible');
+    }, 420);
+  }
+  setInterval(showNext, 3200);
+})();
+
+// Certificate modal + behaviour
+// inserted here so it runs after the DOM elements are available
+const _certModalHtml = `
+  <div id="cert-modal" class="cert-modal" aria-hidden="true" role="dialog">
+    <button id="cert-close" class="cert-close" aria-label="Close">×</button>
+    <img id="cert-large" src="" alt="Certificate large view">
+  </div>
+`;
+// append modal to body once DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+  if (!document.getElementById('cert-modal')) {
+    document.body.insertAdjacentHTML('beforeend', _certModalHtml);
+
+    const thumb = document.getElementById('cert-thumb');
+    const modal = document.getElementById('cert-modal');
+    const large = document.getElementById('cert-large');
+    const closeBtn = document.getElementById('cert-close');
+    const thumbs = document.querySelectorAll('.certificate-thumb');
+    if (!thumbs.length || !modal || !large || !closeBtn) return;
+
+    let lastThumb = null;
+    function openCertFrom(el) {
+      lastThumb = el;
+      large.src = el.src;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      closeBtn.focus();
+    }
+    function closeCert() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      large.src = '';
+      if (lastThumb) lastThumb.focus();
+    }
+
+    thumbs.forEach(t => {
+      t.addEventListener('click', () => openCertFrom(t));
+      t.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCertFrom(t); } });
+    });
+    closeBtn.addEventListener('click', closeCert);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeCert(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) closeCert(); });
+  }
+});
+
+// Org logo modal behavior: opens trajectory logo full-screen on click
+document.addEventListener('DOMContentLoaded', () => {
+  const orgModalHtml = `
+    <div id="org-modal" class="org-modal" aria-hidden="true" role="dialog">
+      <button id="org-close" class="org-close" aria-label="Close">×</button>
+      <img id="org-large" src="" alt="Organization logo large view">
+    </div>
+  `;
+  if (!document.getElementById('org-modal')) {
+    document.body.insertAdjacentHTML('beforeend', orgModalHtml);
+    const orgLogo = document.querySelector('.trajectory-logo');
+    const orgModal = document.getElementById('org-modal');
+    const orgLarge = document.getElementById('org-large');
+    const orgClose = document.getElementById('org-close');
+    if (!orgLogo || !orgModal || !orgLarge || !orgClose) return;
+
+    function openOrgFrom(el) {
+      orgLarge.src = el.src;
+      orgModal.classList.add('open');
+      orgModal.setAttribute('aria-hidden', 'false');
+      orgClose.focus();
+    }
+    function closeOrg() {
+      orgModal.classList.remove('open');
+      orgModal.setAttribute('aria-hidden', 'true');
+      orgLarge.src = '';
+      orgLogo.focus && orgLogo.focus();
+    }
+
+    orgLogo.addEventListener('click', () => openOrgFrom(orgLogo));
+    orgLogo.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openOrgFrom(orgLogo); } });
+    orgClose.addEventListener('click', closeOrg);
+    orgModal.addEventListener('click', (e) => { if (e.target === orgModal) closeOrg(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && orgModal.classList.contains('open')) closeOrg(); });
+  }
+});
+
+// Typing effect for the intro text
+let content = ` SPACE ENTHUSIAST | STUDENT
+
+print("Hello, Cosmos!")
+I’m Manish, an 17-year-old learning 
+technology on Earth while dreaming
+beyond it.
+Not a genius. Not a pro.
+Just someone who believes hardwork 
+can change trajectories.
+I break things to learn, and build to leave a mark.
+Tech is my tool & Space travel my Mission.
+I’m not there yet…
+But I’m getting closer.
+The world doesn’t know me yet.
+But they will.”🚀
+
+Specialties:
+🛰️ Aerospace | 💻 Linux (I use Arch btw) | 🛡️ Cybersecurity | 🐍 Programming 
+
+                                                 Welcome to the grind. Fuel: coffee. Payload: dreams..`;
+
+let i = 0;
+function typeContent() {
+  if (i < content.length) {
+    document.getElementById("content").innerHTML += `<span style='color: white;'>${content.charAt(i)}</span>`;
+    i++;
+    setTimeout(typeContent, 18);
+  } else {
+    document.getElementById("content").innerHTML += "<span class='cursor'>|</span>";
+  }
+}
+typeContent();
+
+// Falling title animation
+window.addEventListener('load', () => {
+    const titleText = "whoAmi";
+    const titleContainer = document.getElementById('animated-title-main');
+    titleText.split('').forEach((char, index) => {
+        const span = document.createElement('span');
+        if(char === ' ') {
+            span.innerHTML = '&nbsp;';
+        } else {
+            span.textContent = char;
+        }
+        span.style.animationDelay = `${index * 0.1}s`;
+        titleContainer.appendChild(span);
+    });
+});
+
+// --- Intersection Observer for scroll animations ---
+document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll('.card');
+
+    const observerOptions = {
+        root: null, // observes intersections relative to the viewport
+        rootMargin: '0px',
+        threshold: 0.1 // trigger when 10% of the element is visible
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Optional: stop observing the element once it's visible
+                // observer.unobserve(entry.target); 
+            }
+        });
+    }, observerOptions);
+
+    cards.forEach(card => {
+        observer.observe(card);
+    });
+});
+</script>
+
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('light-mode');
+    }
+  </script>
+
+
+</body>
+ 
+</html>
