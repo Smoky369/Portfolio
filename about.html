@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About MANISH</title>
+  <title>Manish Pathak</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&family=Audiowide&family=Russo+One&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
@@ -187,12 +187,12 @@
         letter-spacing: 0.5px;
     }
     
-    /* --- About Me Section Image (techy irregular frame) --- */
+   
     .about-image-container {
       float: right;
       margin-left: 2rem;
       margin-bottom: 2rem;
-      width: 320px; /* more space for the frame and accents */
+      width: 320px; 
     }
 
     .tech-frame {
@@ -210,7 +210,7 @@
       background-clip: padding-box;
     }
 
-    /* neon outline behind the irregular shape */
+    
     .tech-frame::before {
       content: '';
       position: absolute;
@@ -226,7 +226,7 @@
       pointer-events: none;
     }
 
-    /* subtle glitch overlay using the same image as background */
+    
     .tech-frame::after {
       content: '';
       position: absolute;
@@ -253,10 +253,9 @@
       76% { transform: translateX(0) skewX(0deg); opacity: 0.16; }
     }
 
-    /* stronger micro-glitch on hover */
     .tech-frame:hover::after { opacity: 0.28; animation-duration: 1.6s; }
 
-    /* layered glitch spans for stronger effect */
+   
     .glitch-layer {
       position: absolute;
       inset: 0;
@@ -912,7 +911,7 @@
         }
     }
 
-    /* --- Footer Styles --- */
+   
     footer {
         background-color: rgba(0, 10, 5, 0.5);
         backdrop-filter: blur(5px);
@@ -968,7 +967,7 @@
         text-shadow: 0 0 15px rgba(0, 255, 153, 0.6);
     }
 
-    /* Download CV Button */
+   
     .download-cv-btn {
         position: absolute;
         top: 20px;
@@ -1330,7 +1329,6 @@ let matrixColor = '#006600';
 
 
 function draw() {
-  // slight opacity to leave faint trails for both matrix and comets
   ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -1344,14 +1342,12 @@ function draw() {
     drops[i]++;
   }
 
-  // comets
-    // (comets removed)
 }
 
 window.addEventListener('resize', resizeCanvas);
 setInterval(draw, 33);
 
-// Name rotation script (cycles displayed name in different languages)
+
 ;(function(){
   const variants = [
     'Manish Pathak',
@@ -1379,15 +1375,13 @@ setInterval(draw, 33);
   setInterval(showNext, 3200);
 })();
 
-// Certificate modal + behaviour
-// inserted here so it runs after the DOM elements are available
 const _certModalHtml = `
   <div id="cert-modal" class="cert-modal" aria-hidden="true" role="dialog">
     <button id="cert-close" class="cert-close" aria-label="Close">×</button>
     <img id="cert-large" src="" alt="Certificate large view">
   </div>
 `;
-// append modal to body once DOM ready
+
 document.addEventListener('DOMContentLoaded', () => {
   if (!document.getElementById('cert-modal')) {
     document.body.insertAdjacentHTML('beforeend', _certModalHtml);
@@ -1424,7 +1418,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Org logo modal behavior: opens trajectory logo full-screen on click
+
 document.addEventListener('DOMContentLoaded', () => {
   const orgModalHtml = `
     <div id="org-modal" class="org-modal" aria-hidden="true" role="dialog">
@@ -1461,7 +1455,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Typing effect for the intro text
+
 let content = ` SPACE ENTHUSIAST | STUDENT
 
 print("Hello, Cosmos!")
@@ -1495,7 +1489,7 @@ function typeContent() {
 }
 typeContent();
 
-// Falling title animation
+
 window.addEventListener('load', () => {
     const titleText = "whoAmi";
     const titleContainer = document.getElementById('animated-title-main');
@@ -1511,22 +1505,21 @@ window.addEventListener('load', () => {
     });
 });
 
-// --- Intersection Observer for scroll animations ---
+
 document.addEventListener("DOMContentLoaded", () => {
     const cards = document.querySelectorAll('.card');
 
     const observerOptions = {
-        root: null, // observes intersections relative to the viewport
+        root: null, 
         rootMargin: '0px',
-        threshold: 0.1 // trigger when 10% of the element is visible
+        threshold: 0.1 
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // Optional: stop observing the element once it's visible
-                // observer.unobserve(entry.target); 
+               
             }
         });
     }, observerOptions);
